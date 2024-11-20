@@ -9,3 +9,6 @@ body {
     margin-top: 10px; /* ヘッダーの上に20pxの余白を追加 */
     padding: 10px; /* 内側にも少し余白を追加 */
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

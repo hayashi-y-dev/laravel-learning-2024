@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laravel with Bootstrap</title>
+    <title>在庫管理システム</title>
     @vite(['resources/css/app.scss', 'resources/js/app.js'])
 </head>
 <body>
@@ -16,4 +16,24 @@
         @yield('content')
     </div>
 </body>
+
+<div>
+    @include('layouts.navigation') {{-- ナビゲーションバーのインクルード --}}
+    
+    <!-- Page Heading -->
+    @if (isset($header))
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                {{ $header }}
+            </div>
+        </header>
+    @endif
+
+    <!-- Page Content -->
+    <main>
+        {{ $slot }}
+    </main>
+</div>
+
+
 </html>
