@@ -5,6 +5,10 @@
     "Remember me": "ログイン状態を保持する",
     "Confirm Password": "パスワード（確認用）",
     "Already registered?": "登録済みの場合はこちら",
+    "Forgot your password?":"パスワード再設定",
     "Register": "登録！",
-    "Dashboard":"ダッシュボード"
+    "Dashboard":"ダッシュボード",
+    "Profile":"プロフィール",
+    "Log Out":"ログアウト",
+    "Log in":"ログイン！"
 }

@@ -12,12 +12,8 @@
             <a class="navbar-brand" href="#">在庫管理システム</a>
         </div>
     </nav>
-    <div class="container mt-4">
-        @yield('content')
-    </div>
-</body>
 
-<div>
+    <div>
     @include('layouts.navigation') {{-- ナビゲーションバーのインクルード --}}
     
     <!-- Page Heading -->
@@ -36,6 +32,5 @@
         @endif
     </main>
 </div>
-
-
+</body>
 </html>
