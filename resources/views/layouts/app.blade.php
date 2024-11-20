@@ -31,7 +31,9 @@
 
     <!-- Page Content -->
     <main>
-        {{ $slot }}
+        @if (isset($slot))
+            {{ $slot }}
+        @endif
     </main>
 </div>
 
