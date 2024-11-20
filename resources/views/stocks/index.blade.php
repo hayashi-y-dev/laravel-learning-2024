@@ -7,7 +7,7 @@
         <div class="card-header">
             <h5>在庫一覧</h5>
         </div>
-        <!-- カードのボディ -->
+        <!-- カードのボディ！ -->
         <div class="card-body">
             <!-- 検索フォーム -->
             <!-- <a href="{{ route('stocks.create') }}" class="btn btn-primary mb-3">在庫登録</a> -->
