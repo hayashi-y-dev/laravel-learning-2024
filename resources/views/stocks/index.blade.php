@@ -1,5 +1,6 @@
-<!-- @extends('layouts.app') -->
-<x-app-layout>
+@extends('layouts.app')
+
+@section('content')
 <div class="container mt-4">
     <div class="card">
         <!-- カードのヘッダー -->
@@ -62,4 +63,4 @@
         </div>
     </div>
 </div>
-</x-app-layout>
+@endsection

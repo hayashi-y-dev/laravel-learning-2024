@@ -27,7 +27,9 @@
 
     <!-- Page Content -->
     <main>
-        @if (isset($slot))
+        @hasSection('content')
+            @yield('content')
+        @else
             {{ $slot }}
         @endif
     </main>
