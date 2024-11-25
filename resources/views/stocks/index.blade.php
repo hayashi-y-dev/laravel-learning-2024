@@ -14,11 +14,11 @@
             <form action="{{ route('stocks.index') }}" method="GET" class="mb-4">
                 <div class="row g-3">
                     <!-- 商品名検索 -->
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <input type="text" name="name" class="form-control" placeholder="商品名を入力" value="{{ request('name') }}">
                     </div>
                     <!-- 種別検索 -->
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <select name="category" class="form-select">
                             <option value="">全て</option>
                             @foreach ($categories as $category)
@@ -32,8 +32,16 @@
                     <div class="col-md-2">
                         <button type="submit" class="btn btn-primary w-100">検索</button>
                     </div>
+                    </form>
+                    <!-- CSV出力ボタン -->
+                    <div class="col-md-2">
+                        <form action="{{ route('stocks.export') }}" method="GET" style="display:inline;">
+                            <input type="hidden" name="name" value="{{ request('name') }}">
+                            <input type="hidden" name="category" value="{{ request('category') }}">
+                            <button type="submit" class="btn btn-light">CSV出力</button>
+                        </form>
+                    </div>
                 </div>
-            </form>
 
             <!-- 検索結果テーブル -->
             <table class="table table-bordered">

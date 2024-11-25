@@ -4,15 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Stock;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class StockController extends Controller
 {
     // 在庫一覧表示
     public function index(Request $request)
     {
-        // $stocks = Stock::when($request->category, function($query) use ($request) {
-        //     return $query->where('category', $request->category);
-        // })->get();
         $stocks = Stock::when($request->category, function ($query) use ($request) {
             return $query->where('category', $request->category);
         })->when($request->name, function ($query) use ($request) {
@@ -88,6 +86,49 @@ class StockController extends Controller
         $stock = Stock::findOrFail($id);
         $stock->delete();
         return redirect()->route('stocks.index');
+    }
+
+    // CSV出力
+    public function export(Request $request)
+    {
+        // 検索条件を取得
+        $name = $request->input('name');
+        $category = $request->input('category');
+    
+        // 検索条件に応じたデータを取得
+        $stocks = Stock::query()
+            ->when($name, function ($query, $name) {
+                return $query->where('name', 'like', "%$name%");
+            })
+            ->when($category, function ($query, $category) {
+                return $query->where('category', $category);
+            })
+            ->get();
+    
+        // CSVデータを作成
+        $csvData = [];
+        $csvData[] = ['ID', '商品名', '種別', '個数', 'メモ']; // ヘッダー行
+        foreach ($stocks as $stock) {
+            $csvData[] = [
+                $stock->id,
+                $stock->name,
+                $stock->category,
+                $stock->quantity,
+                $stock->memo,
+            ];
+        }
+    
+        // CSVを文字列に変換
+        $csvContent = '';
+        foreach ($csvData as $row) {
+            $csvContent .= implode(',', $row) . "\n";
+        }
+
+        // CSVをレスポンスとして返す
+        return Response::make($csvContent, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="stocks.csv"',
+        ]);
     }
 }
 

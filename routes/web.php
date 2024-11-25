@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
 
     //在庫検索
     Route::get('/stocksSearch', [StockController::class, 'index'])->name('stocks.index');
+    Route::get('/stocks/export', [StockController::class, 'export'])->name('stocks.export');
     Route::get('/stocks/create', [StockController::class, 'create'])->name('stocks.create');
     Route::post('/stocks', [StockController::class, 'store']);
     Route::get('/stocks/{id}', [StockController::class, 'show'])->name('stocks.show');
