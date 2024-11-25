@@ -16,6 +16,12 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('stocks.index')" :active="request()->routeIs('stocks.index')">
+                        在庫検索
+                    </x-nav-link>
+                    <x-nav-link :href="route('stocks.index')" :active="request()->routeIs('stocks.index')">
+                        CSV取込
+                    </x-nav-link>
                 </div>
             </div>
 
