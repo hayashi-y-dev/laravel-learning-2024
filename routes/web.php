@@ -15,17 +15,11 @@ use App\Http\Controllers\StockController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
 
-Route::get('/', [StockController::class, 'index'])->name('stocks.index');
-Route::get('/stocks/create', [StockController::class, 'create'])->name('stocks.create');
-Route::post('/stocks', [StockController::class, 'store']);
-Route::get('/stocks/{id}', [StockController::class, 'show'])->name('stocks.show');
-Route::get('/stocks/{id}/edit', [StockController::class, 'edit'])->name('stocks.edit');
-Route::put('/stocks/{id}', [StockController::class, 'update']);
-Route::delete('/stocks/{id}', [StockController::class, 'destroy']);
+
 
 
 Route::get('/dashboard', function () {
@@ -36,6 +30,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //在庫検索
+    Route::get('/stocksSearch', [StockController::class, 'index'])->name('stocks.index');
+    Route::get('/stocks/create', [StockController::class, 'create'])->name('stocks.create');
+    Route::post('/stocks', [StockController::class, 'store']);
+    Route::get('/stocks/{id}', [StockController::class, 'show'])->name('stocks.show');
+    Route::get('/stocks/{id}/edit', [StockController::class, 'edit'])->name('stocks.edit');
+    Route::put('/stocks/{id}', [StockController::class, 'update']);
+    Route::delete('/stocks/{id}', [StockController::class, 'destroy']);
 });
 
 require __DIR__.'/auth.php';
