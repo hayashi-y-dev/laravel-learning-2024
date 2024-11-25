@@ -38,7 +38,7 @@
                         <form action="{{ route('stocks.export') }}" method="GET" style="display:inline;">
                             <input type="hidden" name="name" value="{{ request('name') }}">
                             <input type="hidden" name="category" value="{{ request('category') }}">
-                            <button type="submit" class="btn btn-light">CSV出力</button>
+                            <button type="submit" class="btn btn-light w-100">CSV出力</button>
                         </form>
                     </div>
                 </div>
