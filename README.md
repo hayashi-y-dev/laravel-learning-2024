@@ -1,66 +1,61 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 在庫管理アプリ（Laravel 自己学習）
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> **未完成です。** 2024年11月に自己学習として作ったもので、現在はメンテナンスしていません。
+> PHP 8.1 / Laravel 10 は当時のバージョンのままです。
 
-## About Laravel
+## 概要
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+前職で予定されていた Laravel の新規案件に備えて、業務の合間に作成した在庫管理アプリです。
+完成させることよりも、ルーティング・認証・マイグレーションといった Laravel の基本的な仕組みを、実際に手を動かして理解することを目的としていました。
+コーディングエージェントは使わず、公式ドキュメントや技術記事、ChatGPT への質問で調べた内容を、手元で動かしながら確認しています。
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Git での管理は途中（2024/11/20）から始めたため、最初のコミットにはそれまでの約5日分の作業がまとめて入っています
+- 画面や DB のデータはすべてダミーです（在庫データは Factory で生成）
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## できること
 
-## Learning Laravel
+- ログイン（Laravel Breeze）。ログインしないと在庫画面には入れない
+- 商品名・種別での在庫検索（詳細画面から戻っても検索条件を保持）
+- 在庫の詳細表示
+- 検索結果の CSV 出力
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 未実装
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- 在庫の登録画面・編集画面
+- 種別の選択肢を DB から動的に作る
+- メール認証
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 技術構成
 
-## Laravel Sponsors
+- PHP 8.1 / Laravel 10 / Laravel Breeze
+- MySQL 8.0
+- Docker Compose（app・db コンテナ）/ Vite / Bootstrap / Tailwind CSS
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Premium Partners
+## 主に詰まった点と対応
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **Docker 環境での Laravel インストール**
 
-## Contributing
+  docker-compose.yml を置いたプロジェクトルートをコンテナにマウントしていたため、「ディレクトリが空ではない」というエラーでインストールできなかった。
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+  → Laravel 用に `app` ディレクトリを分け、そこをマウントする構成に変更して解決した。
 
-## Code of Conduct
+- **Breeze と自作レイアウトの統合**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+  後から Laravel Breeze を導入した際に、自作のレイアウトとルート定義が上書きされた。手作業で復元したあとも、Breeze の画面（コンポーネント方式）と自作の画面（テンプレート継承方式）を1つのレイアウトで扱えず、`Undefined variable $slot` が発生した。
 
-## Security Vulnerabilities
+  → いくつかの方法を試し、最終的に `@hasSection` で方式を判定して切り替える形にした。
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+  ※振り返り：コンポーネント方式に統一するほうが適切。当時も一度その方向で試したが、Blade の書き方のミスでうまくいかず、分岐で対応した
 
-## License
+- **CSV 出力が 404 になる**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+  ルート自体は定義しているのに、`/stocks/export` にアクセスすると 404 になった。
+
+  → 原因はルートの定義順だった。先に `/stocks/{id}` を定義していた。ルートは上から順に照合されるため、固定パスのルートを先に定義する順番に並べ替えて解決した。
+
+- **カラム追加がマイグレーションに反映されない**
+
+  既存のマイグレーションファイルを修正して実行したところ、「Nothing to migrate」となった。
+
+  → 実行済みのマイグレーションは再実行されないため、変更用のマイグレーションファイルを新たに作成して対応した。
